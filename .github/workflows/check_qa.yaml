@@ -12,7 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          echo ${{ toJson(github.event) }}
+          echo ${{ toJson(github) }}
+          echo "done"
       - uses: peter-evans/find-comment@v3
         id: fc
         with:
@@ -50,7 +51,11 @@ jobs:
                     updatedAt
                     url
                     headRef {
-                      name
+                      target {
+                        ... on Commit {
+                          oid
+                        }
+                      }
                     }
                   }
                 }
