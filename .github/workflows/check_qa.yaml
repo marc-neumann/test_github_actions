@@ -29,15 +29,34 @@ jobs:
           echo "::error title=missing qa ok"
           exit 1
 
+      - name: get pullrequest head sha
+        id: get-sha
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            octokit.rest.pulls.get(
+              owner: context.repo.owner,
+              repo: context.repo.repo
+              pull_number: ${{ github.event.number || github.event.issue.number }}
+            ).then((response) => {
+              console.log(response.data.head.sha);
+              return response.data.head.sha
+            });
+
+
+      - run: echo "${{steps.get-sha.outputs.result}}"
+
       - name: Report tests check
         if: ${{ steps.fc.outputs.comment-id != '' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.checks.create({
               name: 'qa comment check name',
-              head_sha: '${{ github.event.issue.pull_request.head.sha }}',
+              head_sha: '${{steps.get-sha.outputs.result}}',
               status: 'completed',
               conclusion: 'success',
               output: {
