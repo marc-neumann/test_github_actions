@@ -28,8 +28,21 @@ jobs:
           echo "::error title=missing qa ok"
           exit 1
 
-      - name: A/B Check2
-        if: ${{ steps.fc.outputs.comment-id == null }}
-        run: |
-          echo "::error title=missing qa ok 2"
-          exit 1
+      - name: Report tests check
+        if: ${{ steps.fc.outputs.comment-id != '' }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.checks.create({
+              name: 'qa comment check name',
+              head_sha: '${{ github.event.issue.pull_request.head.sha }}',
+              status: 'completed',
+              conclusion: '${{ steps.tests-step.outcome }}',
+              output: {
+                title: 'qa comment check title',
+                summary: 'Results: ${{ steps.tests-step.outcome }}'
+              },
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
