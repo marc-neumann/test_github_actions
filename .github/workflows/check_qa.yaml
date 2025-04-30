@@ -1,0 +1,24 @@
+name: check qa status
+
+on:
+  pull_request:
+  workflow_dispatch:
+  issue_comment:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peter-evans/find-comment@v3
+        id: fc
+        with:
+          issue-number: ${{ github.event.number }}
+          body-includes: qa
+      - run: |
+          echo ${{ steps.fc.outputs.comment-id }}
+          echo ${{ steps.fc.outputs.comment-node-id }}
+          echo ${{ steps.fc.outputs.comment-body }}
+          echo ${{ steps.fc.outputs.comment-author }}
+          echo ${{ steps.fc.outputs.comment-created-at }}
