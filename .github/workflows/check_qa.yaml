@@ -93,10 +93,6 @@ jobs:
                 createCheckRun(input: $input) {
                   checkRun {
                     id
-                    name
-                    headSha
-                    conclusion
-                    status
                   }
                 }
               }`;
