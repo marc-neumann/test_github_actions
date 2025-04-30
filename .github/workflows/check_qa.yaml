@@ -3,6 +3,7 @@ name: check qa status
 on:
   pull_request:
   workflow_dispatch:
+  issue_comment:
 
 jobs:
   check:
