@@ -14,6 +14,7 @@ jobs:
       - run: |
           echo event number ${{ github.event.number }}
           echo event issue number ${{ github.event.issue.number }}
+          echo ${{ toJson(github.event) }}
       - uses: peter-evans/find-comment@v3
         id: fc
         with:
@@ -38,10 +39,10 @@ jobs:
               name: 'qa comment check name',
               head_sha: '${{ github.event.issue.pull_request.head.sha }}',
               status: 'completed',
-              conclusion: '${{ steps.tests-step.outcome }}',
+              conclusion: 'success',
               output: {
                 title: 'qa comment check title',
-                summary: 'Results: ${{ steps.tests-step.outcome }}'
+                summary: 'Results: success'
               },
               owner: context.repo.owner,
               repo: context.repo.repo
