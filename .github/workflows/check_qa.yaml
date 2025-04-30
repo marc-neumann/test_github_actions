@@ -10,10 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: LouisBrunner/checks-action@v2.0.0
+      - uses: peter-evans/find-comment@v3
+        id: fc
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test XYZ
-          conclusion: ${{ job.status }}
-          output: |
-            {"summary":"foo"}
+          issue-number: ${{ github.event.number }}
+          body-includes: qa
