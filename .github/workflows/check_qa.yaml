@@ -1,0 +1,22 @@
+name: check qa status
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: [self-hosted]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/create-outputs@v0.0.0-fake
+        id: test
+      - uses: LouisBrunner/checks-action@v2.0.0
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test XYZ
+          conclusion: ${{ job.status }}
+          output: |
+            {"summary":"${{ steps.test.outputs.summary }}"}
