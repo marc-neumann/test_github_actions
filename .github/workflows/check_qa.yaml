@@ -47,6 +47,9 @@ jobs:
                     createdAt
                     updatedAt
                     url
+                    head {
+                      ref
+                    }
                   }
                 }
               }`;
