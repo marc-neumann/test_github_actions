@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          echo ${{ toJson(event) }}
       - uses: peter-evans/find-comment@v3
         id: fc
         with:
