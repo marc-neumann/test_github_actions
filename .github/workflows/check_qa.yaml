@@ -34,13 +34,31 @@ jobs:
           script: |
             console.log('${{ github.event.number || github.event.issue.number }}')
             const prId = 4;  // Replace with your pull request ID
-            const { data: pullRequest } = await github.pulls.get({
+            const query = `
+              query($owner: String!, $repo: String!, $pullNumber: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  pullRequest(number: $pullNumber) {
+                    title
+                    body
+                    state
+                    headRef
+                    author {
+                      login
+                    }
+                    createdAt
+                    updatedAt
+                    url
+                  }
+                }
+              }`;
+            const variables = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: prId,
-            });
+              pullNumber: prId,
+            };
 
-            console.log(pullRequest);
+            const response = await github.graphql(query, variables);
+            console.log(response.repository.pullRequest);
 
       - run: echo "${{ steps.get-sha.outputs.result }}"
 
