@@ -75,18 +75,34 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const checkRunResponse = await github.checks.createForRef({
+            const checkRunInput = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: '${{ steps.get_sha.outputs.result }}', // Use the SHA from the previous step
               name: 'check qa status', // Name of the check run
               head_sha: '${{ steps.get_sha.outputs.result }}', // SHA of the commit to check
-              status: 'completed', // You can set this to 'in_progress', 'completed', or 'queued'
-              conclusion: null, // This will be set later after running your checks
+              status: 'COMPLETED', // Status of the check run
               output: {
                 title: 'My Check Result',
-                summary: 'This is an example of how to create a check run using GitHub Actions and GraphQL.',
+                summary: 'This is an example of how to create a check run using GraphQL mutation.',
                 text: 'Additional details about the check can go here.'
-              }
+              },
+            };
+
+            const mutation = `
+              mutation($input: CreateCheckRunInput!) {
+                createCheckRun(input: $input) {
+                  checkRun {
+                    id
+                    name
+                    headSha
+                    conclusion
+                    status
+                  }
+                }
+              }`;
+
+            const response = await github.graphql(mutation, {
+              input: checkRunInput,
             });
-            console.log(`Check run created: ${checkRunResponse.data.checkRun.id}`);
+
+            console.log(`Check run created:`, response.createCheckRun.checkRun);
