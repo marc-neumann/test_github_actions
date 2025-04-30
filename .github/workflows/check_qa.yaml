@@ -19,8 +19,11 @@ jobs:
         with:
           issue-number: ${{ github.event.number || github.event.issue.number }}
           body-includes: qa
+      - run: |
+          echo ${{ steps.fc.outputs.comment-id }}
+
       - name: A/B Check
-        if: ${{ steps.fc.outputs.comment-id }} == ''
+        if: ${{ steps.fc.outputs.comment-id }} == ""
         run: |
           echo "::error title=missing qa ok"
           exit 1
