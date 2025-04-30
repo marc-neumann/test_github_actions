@@ -47,8 +47,8 @@ jobs:
                     createdAt
                     updatedAt
                     url
-                    head {
-                      ref
+                    headRef {
+                      name
                     }
                   }
                 }
