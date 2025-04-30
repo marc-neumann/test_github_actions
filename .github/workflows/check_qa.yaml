@@ -32,12 +32,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            console.log('get pullrequest head sha')
-            await github.rest.pulls.get.endpoint.merge({
+            console.log('${{ github.event.number || github.event.issue.number }}')
+            const prId = 4;  // Replace with your pull request ID
+            const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ github.event.number || github.event.issue.number }},
+              pull_number: prId,
             });
+
+            console.log(pullRequest);
 
       - run: echo "${{ steps.get-sha.outputs.result }}"
 
