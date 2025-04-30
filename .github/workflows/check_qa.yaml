@@ -23,13 +23,13 @@ jobs:
           echo ${{ steps.fc.outputs.comment-id }}
 
       - name: A/B Check
-        if: ${{ steps.fc.outputs.comment-id }} == ""
+        if: ${{ steps.fc.outputs.comment-id == '' }}
         run: |
           echo "::error title=missing qa ok"
           exit 1
 
       - name: A/B Check2
-        if: ${{ steps.fc.outputs.comment-id }} == null
+        if: ${{ steps.fc.outputs.comment-id == null }}
         run: |
           echo "::error title=missing qa ok 2"
           exit 1
