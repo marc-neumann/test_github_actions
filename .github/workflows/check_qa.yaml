@@ -12,8 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          echo ${{ toJson(github.event) }}
+          # echo ${{ toJson(github.event) }}
           echo ${{ github.event.number }}
+          echo ${{ github.event.issue.number }}
       - uses: peter-evans/find-comment@v3
         id: fc
         with:
