@@ -32,17 +32,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            github.pulls.get({
+            return github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: ${{ github.event.number || github.event.issue.number }},
-            }).then((response) => {
-              console.log(response.data.head.sha);
-              return response.data.head.sha;
             });
 
-
-      - run: echo "${{steps.get-sha.outputs.result}}"
+      - run: echo "${{ steps.get-sha.outputs.result }}"
 
       - name: Report tests check
         if: ${{ steps.fc.outputs.comment-id != '' }}
@@ -52,13 +48,13 @@ jobs:
           script: |
             github.checks.create({
               name: 'qa comment check name',
-              head_sha: '${{steps.get-sha.outputs.result}}',
+              head_sha: '${{ steps.get-sha.outputs.result }}',
               status: 'completed',
               conclusion: 'success',
               output: {
                 title: 'qa comment check title',
                 summary: 'Results: success'
               },
-              owner: context.repo.owner,
-              repo: context.repo.repo
+              owner: ${{ context.repo.owner }},
+              repo: ${{ context.repo.repo }}
             })
