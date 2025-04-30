@@ -15,3 +15,9 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body-includes: qa
+      - run: |
+          echo ${{ steps.fc.outputs.comment-id }}
+          echo ${{ steps.fc.outputs.comment-node-id }}
+          echo ${{ steps.fc.outputs.comment-body }}
+          echo ${{ steps.fc.outputs.comment-author }}
+          echo ${{ steps.fc.outputs.comment-created-at }}
