@@ -11,6 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          echo ${{ github.event }}
+          echo ${{ github.event.number }}
       - uses: peter-evans/find-comment@v3
         id: fc
         with:
