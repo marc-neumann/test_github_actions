@@ -41,7 +41,6 @@ jobs:
                     title
                     body
                     state
-                    headRef
                     author {
                       login
                     }
