@@ -80,6 +80,7 @@ jobs:
               name: 'check qa status', // Name of the check run
               headSha: '35de5f17b5458f38ed216e42b94ad03b57ccac05', // SHA of the commit to check
               status: 'COMPLETED', // Status of the check run
+              conclusion: 'success',
               output: {
                 title: 'My Check Result',
                 summary: 'This is an example of how to create a check run using GraphQL mutation.',
