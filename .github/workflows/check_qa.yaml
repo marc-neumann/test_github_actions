@@ -78,7 +78,7 @@ jobs:
             const checkRunInput = {
               repositoryId: 'R_kgDOOiKeKA', // ID of the repository
               name: 'check qa status', // Name of the check run
-              headSha: '${{ steps.get_sha.outputs.result }}', // SHA of the commit to check
+              headSha: '35de5f17b5458f38ed216e42b94ad03b57ccac05', // SHA of the commit to check
               status: 'COMPLETED', // Status of the check run
               output: {
                 title: 'My Check Result',
