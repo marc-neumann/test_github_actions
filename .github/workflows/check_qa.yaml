@@ -76,10 +76,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const checkRunInput = {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              repositoryId: context.repo.id, // ID of the repository
               name: 'check qa status', // Name of the check run
-              head_sha: '${{ steps.get_sha.outputs.result }}', // SHA of the commit to check
+              headSha: '${{ steps.get_sha.outputs.result }}', // SHA of the commit to check
               status: 'COMPLETED', // Status of the check run
               output: {
                 title: 'My Check Result',
