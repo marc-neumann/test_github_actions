@@ -79,7 +79,6 @@ jobs:
               checkRunId: "CR_kwDOOiKeKM8AAAAJpBH7cQ",
               repositoryId: 'R_kgDOOiKeKA', // ID of the repository
               name: 'check', // Name of the check run
-              headSha: '35de5f17b5458f38ed216e42b94ad03b57ccac05', // SHA of the commit to check
               status: 'COMPLETED', // Status of the check run
               conclusion: 'SUCCESS',
               output: {
