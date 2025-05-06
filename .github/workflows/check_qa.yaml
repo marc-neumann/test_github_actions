@@ -76,6 +76,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const checkRunInput = {
+              checkRunId: "CR_kwDOOiKeKM8AAAAJpBH7cQ",
               repositoryId: 'R_kgDOOiKeKA', // ID of the repository
               name: 'check', // Name of the check run
               headSha: '35de5f17b5458f38ed216e42b94ad03b57ccac05', // SHA of the commit to check
@@ -89,8 +90,8 @@ jobs:
             };
 
             const mutation = `
-              mutation($input: CreateCheckRunInput!) {
-                createCheckRun(input: $input) {
+              mutation($input: UpdateCheckRunInput!) {
+                updateCheckRun(input: $input) {
                   checkRun {
                     id
                   }
